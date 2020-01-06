@@ -27,3 +27,20 @@ function calculateTotal(itemsList) {
   return itemsList.reduce((total, item) => 
     total += item.count * item.price, 0);
 }
+
+function calculateHalfPriceSaving(itemsList, promotion) {
+  var containedHalf = [];
+  let saving = 0;
+  promotion[1].items.forEach((value) => {
+    itemsList.forEach((item) => {
+      if(item.id === value)  {
+        saving += item.price / 2;
+        containedHalf.push(item.name);
+      }
+    });
+  });
+  return {
+    halfPrice: saving,
+    halfPriceList: containedHalf  
+  };
+}
