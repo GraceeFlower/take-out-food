@@ -5,7 +5,7 @@ function bestCharge(selectedItems) {
   var total = calculateTotal(itemsList);
   var {highestSaving, halfPriceList, savingName} = 
   chooseDiscount(itemsList, promotionsList, total);
-  
+  total -= highestSaving;
   return /*TODO*/;
 }
 
