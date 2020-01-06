@@ -1,11 +1,11 @@
 function bestCharge(selectedItems) {
-  var itemsList = loadAllItems();
-  var promotionsList = loadPromotions();
+  let itemsList = loadAllItems();
+  const promotionsList = loadPromotions();
   itemsList = addItemsCount(itemsList, selectedItems);
-  var total = calculateTotal(itemsList);
-  var {highestSaving, halfPriceList, savingName} = 
+  let total = calculateTotal(itemsList);
+  let {highestSaving, halfPriceList, savingName} = 
     chooseDiscount(itemsList, promotionsList, total);
-  var bestChargeDetail = [savingName, halfPriceList, highestSaving];
+  const bestChargeDetail = [savingName, halfPriceList, highestSaving];
   total -= highestSaving;
   
   return printTicket(itemsList, bestChargeDetail, total);
@@ -86,9 +86,9 @@ function calculateHalfPriceSaving(itemsList, promotion) {
 }
 
 function printTicket(itemsList, discount, total) {
-  var menu = itemsList.reduce((menu, item) => 
+  let menu = itemsList.reduce((menu, item) => 
   menu += `${item.name} x ${item.count} = ${item.price * item.count}元\n`, "").trim();
-  var discountInfo = '';
+  let discountInfo = '';
   if (discount[0] === '指定菜品半价') {
     discountInfo = 
     (`使用优惠:\n${discount[0]}(${discount[1].join('，')})，省${discount[2]}元\n`.trim())
@@ -105,5 +105,3 @@ ${menu}
 ${discountInfo}总计：${total}元
 ===================================`;
 }
-
-bestCharge(selectedItems);
