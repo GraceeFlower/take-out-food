@@ -2,6 +2,7 @@ function bestCharge(selectedItems) {
   var itemsList = loadAllItems();
   var promotionsList = loadPromotions();
   itemsList = addItemsCount(itemsList, selectedItems);
+  var total = calculateTotal(itemsList);
   return /*TODO*/;
 }
 
@@ -20,4 +21,9 @@ function addItemsCount(itemsList, selectedItems) {
     });
   });
   return addedCountList;
+}
+
+function calculateTotal(itemsList) {
+  return itemsList.reduce((total, item) => 
+    total += item.count * item.price, 0);
 }
