@@ -33,6 +33,23 @@ function calculateTotal(itemsList) {
     total += item.count * item.price, 0);
 }
 
+function chooseDiscount(itemsList, promotionsList, total) {
+  if (total < 30) {
+    var {halfPrice, halfPriceList} = 
+      calculateHalfPriceSaving(itemsList, promotionsList);
+    var highestSaving = halfPrice;
+    var savingName = halfPrice ? promotionsList[1].type : "";
+  } else {
+    var {highestSaving, halfPriceList, savingName} = 
+      judgeTheHighestSaving(itemsList, promotionsList, total);
+  }
+  return {
+    highestSaving: highestSaving,
+    halfPriceList: halfPriceList,
+    savingName: savingName
+  }
+}
+
 function judgeTheHighestSaving(itemsList, promotionsList, total) {
   let {halfPrice, halfPriceList} = 
     calculateHalfPriceSaving(itemsList, promotionsList, total);
