@@ -2,6 +2,7 @@ function bestCharge(selectedItems) {
   let itemsList = loadAllItems();
   const promotionsList = loadPromotions();
   itemsList = addItemsCount(itemsList, selectedItems);
+  calculateSubtotal(itemsList);
   let total = calculateTotal(itemsList);
   let {highestSaving, halfPriceList, savingName} = 
     chooseDiscount(itemsList, promotionsList, total);
@@ -20,7 +21,7 @@ function addItemsCount(itemsList, selectedItems) {
     let itemId = item.match(regexId)[0];
     itemsList.forEach((value) => {
       if(value.id === itemId) {
-        value["count"] = itemCount;
+        value.count = itemCount;
         return addedCountList.push(value);
       }
     });
@@ -28,9 +29,15 @@ function addItemsCount(itemsList, selectedItems) {
   return addedCountList;
 }
 
+function calculateSubtotal(itemsList) {
+  return itemsList.forEach((item) => {
+    item.subtotal = item.count * item.price;
+  });
+}
+
 function calculateTotal(itemsList) {
   return itemsList.reduce((total, item) => 
-    total += item.count * item.price, 0);
+    total += item.subtotal, 0);
 }
 
 function chooseDiscount(itemsList, promotionsList, total) {
@@ -71,8 +78,8 @@ function calculateHalfPriceSaving(itemsList, promotion) {
 }
 
 function printTicket(itemsList, discount, total) {
-  let menu = itemsList.reduce((menu, item) => 
-  menu += `${item.name} x ${item.count} = ${item.price * item.count}元\n`, "").trim();
+  let menu = itemsList.map((item) => 
+  `${item.name} x ${item.count} = ${item.subtotal}元`).join('\n');
   let discountInfo = '';
   if (discount[0] === '指定菜品半价') {
     discountInfo = 
