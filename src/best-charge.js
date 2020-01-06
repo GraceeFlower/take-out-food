@@ -3,6 +3,9 @@ function bestCharge(selectedItems) {
   var promotionsList = loadPromotions();
   itemsList = addItemsCount(itemsList, selectedItems);
   var total = calculateTotal(itemsList);
+  var {highestSaving, halfPriceList, savingName} = 
+  chooseDiscount(itemsList, promotionsList, total);
+  
   return /*TODO*/;
 }
 
@@ -26,6 +29,24 @@ function addItemsCount(itemsList, selectedItems) {
 function calculateTotal(itemsList) {
   return itemsList.reduce((total, item) => 
     total += item.count * item.price, 0);
+}
+
+function judgeTheHighestSaving(itemsList, promotionsList, total) {
+  let {halfPrice, halfPriceList} = 
+    calculateHalfPriceSaving(itemsList, promotionsList, total);
+  let fullReduce = 6;
+  let saving = Math.max(halfPrice, fullReduce);
+  let savingName;
+  if (fullReduce < halfPrice) {
+    savingName = promotionsList[1].type;
+  } else {
+    savingName = promotionsList[0].type;
+  }
+  return {
+    highestSaving: saving,
+    halfPriceList: halfPriceList,
+    savingName: savingName
+  }
 }
 
 function calculateHalfPriceSaving(itemsList, promotion) {
