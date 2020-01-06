@@ -29,7 +29,7 @@ function calculateTotal(itemsList) {
 }
 
 function calculateHalfPriceSaving(itemsList, promotion) {
-  var containedHalf = [];
+  let containedHalf = [];
   let saving = 0;
   promotion[1].items.forEach((value) => {
     itemsList.forEach((item) => {
