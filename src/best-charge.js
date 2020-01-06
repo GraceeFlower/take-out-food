@@ -8,7 +8,7 @@ function bestCharge(selectedItems) {
   var bestChargeDetail = [savingName, halfPriceList, highestSaving];
   total -= highestSaving;
   
-  return /*TODO*/;
+  return printTicket(itemsList, bestChargeDetail, total);
 }
 
 function addItemsCount(itemsList, selectedItems) {
@@ -84,3 +84,26 @@ function calculateHalfPriceSaving(itemsList, promotion) {
     halfPriceList: containedHalf  
   };
 }
+
+function printTicket(itemsList, discount, total) {
+  var menu = itemsList.reduce((menu, item) => 
+  menu += `${item.name} x ${item.count} = ${item.price * item.count}元\n`, "").trim();
+  var discountInfo = '';
+  if (discount[0] === '指定菜品半价') {
+    discountInfo = 
+    (`使用优惠:\n${discount[0]}(${discount[1].join('，')})，省${discount[2]}元\n`.trim())
+    + '\n-----------------------------------\n';
+  } else if(discount[0] === '满30减6元') {
+    discountInfo = 
+    (`使用优惠:\n${discount[0]}，省${discount[2]}元\n`.trim())
+    + '\n-----------------------------------\n';
+  }
+  return `
+============= 订餐明细 =============
+${menu}
+-----------------------------------
+${discountInfo}总计：${total}元
+===================================`;
+}
+
+bestCharge(selectedItems);
