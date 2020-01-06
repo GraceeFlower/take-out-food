@@ -34,35 +34,20 @@ function calculateTotal(itemsList) {
 }
 
 function chooseDiscount(itemsList, promotionsList, total) {
-  if (total < 30) {
-    var {halfPrice, halfPriceList} = 
+  let {halfPrice, halfPriceList} = 
       calculateHalfPriceSaving(itemsList, promotionsList);
-    var highestSaving = halfPrice;
-    var savingName = halfPrice ? promotionsList[1].type : "";
+  let highestSaving;
+  let savingName;
+  if (total < 30) {
+    highestSaving = halfPrice;
+    savingName = halfPrice ? promotionsList[1].type : "";
   } else {
-    var {highestSaving, halfPriceList, savingName} = 
-      judgeTheHighestSaving(itemsList, promotionsList, total);
+    highestSaving = Math.max(halfPrice, 6);
+    savingName = 6 < halfPrice ? 
+      promotionsList[1].type : promotionsList[0].type; 
   }
   return {
     highestSaving: highestSaving,
-    halfPriceList: halfPriceList,
-    savingName: savingName
-  }
-}
-
-function judgeTheHighestSaving(itemsList, promotionsList, total) {
-  let {halfPrice, halfPriceList} = 
-    calculateHalfPriceSaving(itemsList, promotionsList, total);
-  let fullReduce = 6;
-  let saving = Math.max(halfPrice, fullReduce);
-  let savingName;
-  if (fullReduce < halfPrice) {
-    savingName = promotionsList[1].type;
-  } else {
-    savingName = promotionsList[0].type;
-  }
-  return {
-    highestSaving: saving,
     halfPriceList: halfPriceList,
     savingName: savingName
   }
